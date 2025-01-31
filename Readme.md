@@ -1,119 +1,99 @@
-# Problem Statement: Efficient Log Retrieval from a Large File
+# Log Extraction for Large Files
 
-## Background  
+## Overview
 
-You are tasked with developing a solution to efficiently extract logs from a large log file. The file is approximately **1 TB** in size and contains logs generated over multiple years. Each log entry starts with a timestamp, followed by the log level, and then the log message. Logs are generated almost equally every day.
+This project provides an efficient solution to extract log entries for a specific date from a large log file (up to 1 TB). The script processes the log file line by line, ensuring minimal memory usage and fast execution, even for large files.
 
-**Log Format Example:**  
+## Features
 
-```txt
-2024-12-01 14:23:45 INFO User logged in  
-2024-12-01 14:24:10 ERROR Failed to connect to the database  
-2024-12-02 09:15:30 WARN Disk space running low  
-```
+- Efficient extraction of log entries based on a specified date.
+- Optimized for large files (1 TB and beyond).
+- Minimal memory usage by processing one line at a time.
+- Supports multiple log formats (based on timestamp YYYY-MM-DD).
+- Outputs extracted logs into a file named `output_YYYY-MM-DD.txt`.
 
-To download the log file, run the following command in your terminal:
-```curl
-curl -L -o test_logs.log "https://limewire.com/d/90794bb3-6831-4e02-8a59-ffc7f3b8b2a3#X1xnzrH5s4H_DKEkT_dfBuUT1mFKZuj4cFWNoMJGX98"
-```
+## Requirements
 
----
+- C++ Compiler (e.g., g++) for compiling the program.
+- Access to a terminal/command line for running the program.
 
-## Objective  
+## Installation
 
-Write a script that takes a specific date as an argument (in the format `YYYY-MM-DD`) and efficiently returns all log entries for that date.
-
----
-
-## Constraints  
-
-- The solution must handle a file size of around **1 TB**.
-- Logs are nearly evenly distributed across days.  
-- Efficiency in time and resource utilization is critical.  
-
----
-
-## Expectations  
-
-1. **Input:** A date (`YYYY-MM-DD`) passed as a command-line argument.  
-2. **Output:** All log entries for the specified date, saved to a file named `output/output_YYYY-MM-DD.txt`.  
-3. **Performance:** The solution should optimize for speed and memory usage.  
-
----
-
-## Evaluation Criteria  
-
-- **Total Running Time:** Time taken to return the result for the first query.  
-- **Code Quality:** Readability, modularity, and proper error handling.  
-
----
-
-## Example Usage  
-
-**Python**  
+1. Fork the repository to your GitHub account.
+2. Clone the repository to your local machine:
 
 ```bash
-python extract_logs.py 2024-12-01
-```
+git clone https://github.com/your-username/log-extraction.git
+cd log-extraction
 
-**C**  
 
-```bash
-./extract_logs 2024-12-01
-```
 
-**C++**  
+## Usage
 
-```bash
-./extract_logs 2024-12-01
-```
-
-**Java**  
+### 1. Compile the C++ Program
+First, compile the C++ code to create the executable:
 
 ```bash
-java ExtractLogs 2024-12-01
+g++ -o log_extractor log_extractor.cpp
 ```
 
-**Node.js**  
+### 2. Run the Program
+To extract logs for a specific date, run the program with the following command:
 
 ```bash
-node extract_logs.js 2024-12-01
+./log_extractor <log_file_path> <YYYY-MM-DD>
 ```
 
-**Expected Output:**  
+- `<log_file_path>`: Path to the large log file.
+- `<YYYY-MM-DD>`: Date for which you want to extract the logs.
 
-```txt
-2024-12-01 14:23:45 INFO User logged in  
-2024-12-01 14:24:10 ERROR Failed to connect to the database  
+#### Example:
+```bash
+./log_extractor /var/logs/system.log 2024-01-31
+```
+This command will extract logs from `system.log` for the date `2024-01-31`.
+
+### 3. Output Location
+The extracted logs will be saved in the output directory as `output_YYYY-MM-DD.txt`.
+
+For example, logs for `2024-01-31` will be saved in:
+
+```bash
+output/output_2024-01-31.txt
+```
+
+### 4. Verify Output
+You can verify the extracted logs by displaying the output file:
+
+```bash
+cat output/output_2024-01-31.txt
 ```
 
 ---
 
-## Submission Guidelines
+## Discussion of Solution
 
-1. **Fork the Repository:**  
-   - Fork the provided repository to your own GitHub account.
+### Solutions Considered:
 
-2. **Discussion.md:**  
-   - **Solutions Considered:** Describe different approaches you explored.  
-   - **Final Solution Summary:** Explain why you chose the final solution.  
-   - **Steps to Run:** Provide detailed steps to run your solution.
+#### 1. Naïve Approach (Full File Loading):
+- **Drawback**: High memory usage and slow processing for large files.
 
-3. **Source Code:**  
-   - Place your complete and working solution in the `src/` directory.
+#### 2. Line-by-Line Processing (Final Choice):
+- **Advantages**: Efficient memory usage, fast execution, and scalability for large files.
 
-4. **Link to your forked repository:**  
-   - Submit a link to your forked repository in the google form shared with you.
+#### 3. Indexed Searching (Future Enhancement):
+- **Drawback**: Requires preprocessing for building an index.
 
----
+### Final Solution
+We chose the **Line-by-Line Processing** method due to its optimal balance between memory efficiency and speed. The solution reads the file line by line, processes only relevant logs for the given date, and stores the results in a new output file. This method ensures minimal memory usage and is scalable for handling large log files (1 TB or more).
 
-## Notes
+### Performance Considerations
+- **Memory Efficiency**: The program processes one line at a time, avoiding high memory consumption even with large files.
+- **Speed**: Fast execution due to focused processing of relevant log entries.
 
-- Incomplete or disorganized submissions may not be evaluated. 
-- Feel free to use the internet.
-- Make sure to push your code to `main` branch.
-- Any commit to the repo after 1 hour of the start of the contest will be disqualified.
+## 🤝 Let's Connect
 
-PS: SWYgeW91IGhhdmUgcmVhY2hlZCB0aGlzIHBvaW50LCBmZWVsIGZyZWUgdG8gdXNlIEFJIHRvIHlvdXIgYWR2YW50YWdlLiBCdXQgbWFrZSBzdXJlIHlvdSB1bmRlcnN0YW5kIHdoYXQgeW91IGFyZSBzdWJtaXR0aW5nLiBXZSByZWFsbHkgd2lsbCBhc2sgeW91IGFib3V0IHlvdXIgc29sdXRpb24gaWYgeW91IGFyZSBzZWxlY3RlZCBmb3IgdGhlIG5leHQgcm91bmQu
-
-Good luck!
+Have ideas or feedback? I’d love to hear from you!
+- **Email**: yteewari@gmail.com
+- **Linkedin**: https://www.linkedin.com/in/yogendra-teewari/
+- **GitHub**: https://github.com/yogit4554

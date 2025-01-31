@@ -80,12 +80,3 @@ cat ../output/output_2024-01-31.txt
 ## *Performance Considerations*
 - *Optimized for large files* (1 TB and beyond).
 - *Minimal memory usage* (processes one line at a time).
-
----
-
-## 🤝 Let's Connect
-
-Have ideas or feedback? I’d love to hear from you!
-- **Email**: yteewari@gmail.com
-- **Linkedin**: https://www.linkedin.com/in/yogendra-teewari/
-- **GitHub**: https://github.com/yogit4554
