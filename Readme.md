@@ -23,8 +23,8 @@ This project provides an efficient solution to extract log entries for a specifi
 2. Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/log-extraction.git
-cd log-extraction
+git clone https://github.com/yogit4554/farMart/edit/main/Readme.md
+cd log-extraction```
 
 
 
